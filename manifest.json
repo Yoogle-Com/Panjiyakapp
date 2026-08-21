@@ -4,9 +4,9 @@
   "display": "standalone",
   "name": "सोसायटी तुंहर हाथ",
   "orientation": "any",
-  "scope": "/",
+  "scope": "/Panjiyakapp/",
   "short_name": "yoogle-com.github",
-  "start_url": "/",
+  "start_url": "/Panjiyakapp/",
   "theme_color": "#ffffff",
    "icons": [{"src": "Y.PNG", "sizes": "192x192", "type": "image/png"}, {"src": "Y.PNG", "sizes": "512x512", "type": "image/png"}], "description": "घर बैठे अपने ऋण/लेन देन व अन्य जानकारी इस एप्प के माध्यम से प्राप्त करे"
 }
