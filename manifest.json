@@ -7,5 +7,6 @@
   "scope": "/",
   "short_name": "yoogle-com.github",
   "start_url": "/",
-  "theme_color": "#ffffff"
+  "theme_color": "#ffffff",
+  "icons": [{"src": "Y.PNG", "sizes": "512x512", "type": "image/png"}]
 }
