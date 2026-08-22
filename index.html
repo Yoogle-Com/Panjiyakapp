@@ -12,9 +12,14 @@
     margin: 0; padding: 20px; min-height: 100vh;
     display: flex; align-items: center; justify-content: center;
   }
-  .card { text-align: center; }
+  .card {
+    background: white; border-radius: 14px; padding: 24px 20px;
+    max-width: 420px; width: 100%; box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    text-align: center;
+  }
   .card h1 { font-size: 20px; font-weight: 800; color: #0f766e; margin: 0 0 4px; }
-  .card p.sub { font-size: 13px; color: #6b7280; text-align: center; margin: 0 0 20px; }
+  .card p.sub { font-size: 13px; color: #6b7280; margin: 0 0 4px; }
+  .meta { font-size: 11px; color: #9ca3af; margin: 0 0 20px; }
   .form-area { text-align: left; }
   label { display: block; font-size: 13px; font-weight: 600; color: #134e4a; margin-bottom: 6px; }
   select {
@@ -28,22 +33,16 @@
   }
   button:disabled { background: #9ca3af; cursor: not-allowed; }
   .msg { text-align: center; font-size: 13px; color: #dc2626; margin-top: 12px; min-height: 16px; }
-  .meta { text-align: center; font-size: 11px; color: #9ca3af; margin: -14px 0 18px; }
-  .dev-credit { text-align: center; color: #6b7280; font-size: 12px; margin-top: 20px; line-height: 1.6; }
-  .dev-credit b { color: #134e4a; }
   .dev-credit {
-    text-align: center; color: #e2f5f2; font-size: 12px; margin-top: 22px;
-    padding-bottom: 4px; line-height: 1.6;
+    text-align: center; color: #6b7280; font-size: 12px; margin-top: 20px; line-height: 1.6;
   }
-  .dev-credit b { color: white; }
-  .last-updated {
-    text-align: center; color: #e2f5f2; font-size: 11px; margin-top: 6px; opacity: 0.85;
-  }
+  .dev-credit b { color: #134e4a; }
+  .version-line { font-size: 11px; color: #9ca3af; margin-top: 8px; }
 </style>
 </head>
 <body>
   <div class="card">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAByCAYAAACY/xW0AABZx0lEQVR42p3955McR7rmif7cPSIys7SuQhUKWmtJApSganZP9zlzzuzszlzba2O797+4d/bD/hX7Ye3ams3O3NE9p8/p04rsZlODIAlBSEKLAlBaZqWKCHe/HzwiVWUV0ANaGYGqrMyIcPdXPO/zPq+ISqs2NhYsAAghQFD9d/o9S+01zT+vvbDu7zb9n01+tPZ9G/4t3F+tFUhha+/R9BqBuxZtQMn6H6a/0/BihJBYY+uuzzZehm267uq1Cqy1WGMRQiBk8m9r17xWiKbbSn634UaFqPtMC0K4z2l+YM3XhkVrk75x9frdh1YXDWMMQgiUUtX/e56Ppw1E2jasnfvd2gdKKZPrsi1W0zbcWP09QPJAhKB+LdIHJaWsvqfbWO73munznqoO9wtoW7RXNW8j8AAAAABJRU5ErkJggg==" alt="logo" style="width:56px;height:56px;margin-bottom:8px;">
+    <img src="Y.PNG" alt="logo" style="width:70px;height:70px;margin-bottom:8px;" onerror="this.style.display='none'">
     <h1>किसान ऋण विवरण</h1>
     <p class="sub">अपना जिला और समिति चुनें</p>
     <p class="meta" id="lastUpdated"></p>
@@ -68,9 +67,7 @@
       Developer- Yugal Verma, 6263777500<br>
       Gmail ID- pacs.automation.yoogle@gmail.com
     </div>
-    <div class="last-updated">
-      Version: v1.1 &nbsp;|&nbsp; अंतिम अपडेट: 22/08/2026
-    </div>
+    <div class="version-line" id="versionTag"></div>
   </div>
 
 <script>
