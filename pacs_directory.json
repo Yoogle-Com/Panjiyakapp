@@ -1,14 +1,17 @@
-[
-  {
-    "folder": "soc12552",
-    "district": "Raipur",
-    "short_name": "Ganoud",
-    "full_name": "प्राथमिक कृषि साख सहकारी समिति मर्यादित गनौद"
-  },
-  {
-    "folder": "soc12542",
-    "district": "Raipur",
-    "short_name": "Khorsi",
-    "full_name": "प्राथमिक कृषि साख सहकारी समिति मर्यादित खोरसी"
-  }
-]
+{
+  "updated_at": "23/08/2026 08:41 AM",
+  "pacs": [
+    {
+      "folder": "soc12552",
+      "district": "Raipur",
+      "short_name": "Ganoud",
+      "full_name": "प्राथमिक कृषि साख सहकारी समिति मर्यादित गनौद"
+    },
+    {
+      "folder": "soc12542",
+      "district": "Raipur",
+      "short_name": "Khorsi",
+      "full_name": "प्राथमिक कृषि साख सहकारी समिति मर्यादित खोरसी"
+    }
+  ]
+}
