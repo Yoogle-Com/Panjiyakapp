@@ -5,8 +5,8 @@
   "name": "सोसायटी तुंहर हाथ",
   "short_name": "सोसायटी तुंहर हाथ",
   "orientation": "any",
-  "scope": "/",
-  "start_url": "/",
+  "scope": "/Panjiyakapp/",
+  "start_url": "/Panjiyakapp/",
   "theme_color": "#0f766e",
   "description": "घर बैठे अपना ऋण/लेन देन व अन्य जानकारी देखे",
   "icons": [
