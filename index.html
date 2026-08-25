@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>किसान ऋण विवरण - समिति चुनें</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f766e">
 <style>
   * { box-sizing: border-box; }
   body {
@@ -142,7 +144,9 @@
     if (ss.value) {
       window.location.href = ss.value + '/';
     }
-  });
+  });  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  }
 </script>
 </body>
 </html>
