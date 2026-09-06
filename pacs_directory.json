@@ -1,5 +1,5 @@
 {
-  "updated_at": "03/09/2026 04:32 PM",
+  "updated_at": "06/09/2026 08:54 AM",
   "pacs": [
     {
       "folder": "soc12552",
@@ -12,6 +12,12 @@
       "district": "Raipur",
       "short_name": "Khorsi",
       "full_name": "प्राथमिक कृषि साख सहकारी समिति मर्यादित खोरसी"
+    },
+    {
+      "folder": "soc2013",
+      "district": "Raipur",
+      "short_name": "Pachari",
+      "full_name": "ग्रामीण सेवा सहकारी समिति मर्यादित, पचरी"
     },
     {
       "folder": "soc12550",
