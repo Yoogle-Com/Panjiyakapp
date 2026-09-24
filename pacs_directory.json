@@ -1,6 +1,12 @@
 {
-  "updated_at": "23/09/2026 08:32 AM",
+  "updated_at": "24/09/2026 08:48 AM",
   "pacs": [
+    {
+      "folder": "soc1944",
+      "district": "Raipur",
+      "short_name": "Amodi",
+      "full_name": "ग्रामीण सेवा सहकारी समिति मर्यादित, अमोदी"
+    },
     {
       "folder": "soc12552",
       "district": "Raipur",
