@@ -323,7 +323,7 @@ function adminLoginCheck() {
     let totalDisbursed = 0; // कुल वितरित राशि - sabhi transactions ki amount ka jod (jaisa portal report me hota hai)
     membersData.forEach(m => {
       if (m.transactions.length) totalAmt += m.transactions[m.transactions.length - 1].balance;
-      m.transactions.forEach(t => { totalDisbursed += t.amount; });
+      m.transactions.forEach(t => { if (t.status !== 'Return') totalDisbursed += t.amount; }); // 'Return' (wapsi) entries vitaran me nahi jodte, portal bhi nahi jodta
     });
     document.getElementById('totalKisanCount').textContent = membersData.length;
     document.getElementById('totalKisanAmount').textContent = '₹' + formatNum(totalAmt);
