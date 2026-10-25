@@ -169,6 +169,19 @@
   .fi-stars span { font-size: 13px; color: #cbd5e1; }
   .fi-stars span.filled { color: #f59e0b; }
   .feedback-avg { font-size: 13px; font-weight: 700; color: #92400e; margin-bottom: 10px; }
+
+  .office-status-badge { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 14px; border-radius: 999px; font-weight: 800; font-size: 13px; margin: 0 auto 14px; width: fit-content; border: 2px solid #cbd5e1; background: #f1f5f9; color: #475569; }
+  .office-status-badge.osb-open { background: #f0fdf4; border-color: #16a34a; color: #166534; }
+  .office-status-badge.osb-closed { background: #fef2f2; border-color: #dc2626; color: #991b1b; }
+  .office-status-badge.osb-lunch { background: #fffbeb; border-color: #d97706; color: #92400e; }
+  .osb-dot { width: 9px; height: 9px; border-radius: 50%; background: #94a3b8; flex-shrink: 0; }
+  .office-status-badge.osb-open .osb-dot { background: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.2); }
+  .office-status-badge.osb-closed .osb-dot { background: #dc2626; box-shadow: 0 0 0 3px rgba(220,38,38,0.2); }
+  .office-status-badge.osb-lunch .osb-dot { background: #d97706; box-shadow: 0 0 0 3px rgba(217,119,6,0.2); }
+  .office-status-editor { margin-top: 14px; padding: 12px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; }
+  .office-status-editor-title { font-size: 13px; font-weight: 700; color: #92400e; margin-bottom: 8px; }
+  .office-status-editor select { width: 100%; margin-bottom: 8px; padding: 9px; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit; font-size: 13px; background: #fff; }
+  .office-status-editor button { padding: 9px 16px; border: none; border-radius: 8px; background: #d97706; color: #fff; font-weight: 700; cursor: pointer; font-size: 13px; }
 </style>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -184,11 +197,15 @@
     <h1>किसान ऋण विवरण</h1>
     <p class="samiti-name">ग्रामीण सेवा सहकारी समिति संकरी</p>
     <p id="regNumberLine" style="font-size:11px;color:#94a3b8;margin-top:2px;">पंजीयन क्रमांक: 949</p>
-    <p style="font-size:11px;color:#94a3b8;margin-top:6px;">अंतिम अपडेट: 25/10/2026 09:02 AM</p>
+    <p style="font-size:11px;color:#94a3b8;margin-top:6px;">अंतिम अपडेट: 25/10/2026 09:47 AM</p>
   </div>
 
   <!-- STEP 1: choose portal -->
   <div class="card" id="portalChoice">
+    <div class="office-status-badge" id="officeStatusBadge">
+      <span class="osb-dot"></span>
+      <span id="officeStatusText">स्टेटस लोड हो रहा है...</span>
+    </div>
     <div class="choice-btns">
       <button class="choice-btn" onclick="showScreen('adminLogin')">समिति के लिये (Admin Portal)</button>
       <button class="choice-btn alt" onclick="showScreen('kisanLogin')">किसान के लिये</button>
@@ -248,6 +265,16 @@
       <textarea id="noticeInput3" placeholder="सूचना 3 (वैकल्पिक)" rows="2"></textarea>
       <button onclick="saveNotices()">सूचना सेव करें</button>
       <div class="notice-save-msg" id="noticeSaveMsg"></div>
+    </div>
+    <div class="office-status-editor hidden" id="officeStatusEditor">
+      <div class="office-status-editor-title">🏢 ऑफिस स्टेटस (अभी समिति की स्थिति चुनें)</div>
+      <select id="officeStatusSelect">
+        <option value="open">🟢 आफिस खुली है</option>
+        <option value="closed">🔴 आफिस बंद है</option>
+        <option value="lunch">🟡 Lunch Time</option>
+      </select>
+      <button onclick="saveOfficeStatus()">स्टेटस सेव करें</button>
+      <div class="notice-save-msg" id="officeStatusSaveMsg"></div>
     </div>
     <div class="feedback-list-wrap hidden" id="adminFeedbackList">
       <div class="feedback-list-title">💬 किसानों का फीडबैक</div>
@@ -317,8 +344,10 @@ function adminLoginCheck() {
     document.getElementById('searchInput').placeholder = 'खाता क्रमांक या नाम से खोजें...';
     document.getElementById('adminSummary').classList.remove('hidden');
     document.getElementById('noticeEditor').classList.remove('hidden');
+    document.getElementById('officeStatusEditor').classList.remove('hidden');
     document.getElementById('adminFeedbackList').classList.remove('hidden');
     loadNoticesIntoEditor();
+    loadOfficeStatusIntoEditor();
     let totalAmt = 0;      // कुल बकाया राशि - har kisan ki last transaction ki outstanding balance ka jod
     let totalDisbursed = 0; // कुल वितरित राशि - sabhi transactions ki amount ka jod (jaisa portal report me hota hai)
     membersData.forEach(m => {
@@ -360,6 +389,7 @@ function kisanLoginCheck() {
     document.getElementById('dashboard').querySelector('button[onclick="doSearch()"]').classList.add('hidden');
     document.getElementById('adminSummary').classList.add('hidden');
     document.getElementById('noticeEditor').classList.add('hidden');
+  document.getElementById('officeStatusEditor').classList.add('hidden');
     document.getElementById('adminFeedbackList').classList.add('hidden');
     document.getElementById('kisanFeedbackBox').classList.remove('hidden');
     document.getElementById('contactNote').textContent = 'पासवर्ड बदलने के लिए समिति कार्यालय से संपर्क करें।';
@@ -385,6 +415,7 @@ function logout() {
   document.getElementById('dashboard').querySelector('button[onclick="doSearch()"]').classList.remove('hidden');
   document.getElementById('adminSummary').classList.add('hidden');
   document.getElementById('noticeEditor').classList.add('hidden');
+  document.getElementById('officeStatusEditor').classList.add('hidden');
   document.getElementById('adminFeedbackList').classList.add('hidden');
   document.getElementById('kisanFeedbackBox').classList.add('hidden');
   document.getElementById('results').classList.remove('hidden');
@@ -566,6 +597,54 @@ function saveNotices() {
     setTimeout(function () { msg.textContent = ''; }, 3000);
   }).catch(function (err) {
     msg.textContent = '❌ सेव नहीं हुई: ' + err.message;
+  });
+}
+
+// ---- ऑफिस स्टेटस (Firebase Realtime Database ke zariye) ----
+let officeStatusRef = null;
+try {
+  officeStatusRef = firebase.database().ref('officeStatus/' + PACS_ID);
+  officeStatusRef.on('value', function (snapshot) {
+    renderOfficeStatus(snapshot.val());
+  });
+} catch (e) {
+  console.warn('ऑफिस स्टेटस load nahi ho paaya:', e);
+}
+
+function renderOfficeStatus(data) {
+  const badge = document.getElementById('officeStatusBadge');
+  const text = document.getElementById('officeStatusText');
+  const status = (data && data.status) || 'closed';
+  badge.classList.remove('osb-open', 'osb-closed', 'osb-lunch');
+  if (status === 'open') {
+    badge.classList.add('osb-open');
+    text.textContent = '🟢 आफिस खुली है';
+  } else if (status === 'lunch') {
+    badge.classList.add('osb-lunch');
+    text.textContent = '🟡 Lunch Time';
+  } else {
+    badge.classList.add('osb-closed');
+    text.textContent = '🔴 आफिस बंद है';
+  }
+}
+
+function loadOfficeStatusIntoEditor() {
+  if (!officeStatusRef) return;
+  officeStatusRef.once('value', function (snapshot) {
+    const data = snapshot.val() || {};
+    document.getElementById('officeStatusSelect').value = data.status || 'closed';
+  });
+}
+
+function saveOfficeStatus() {
+  if (!officeStatusRef) return;
+  const status = document.getElementById('officeStatusSelect').value;
+  const msg = document.getElementById('officeStatusSaveMsg');
+  officeStatusRef.set({ status: status, updatedAt: Date.now() }).then(function () {
+    msg.textContent = '✅ स्टेटस सेव हो गया, सभी को तुरंत दिख रहा है';
+    setTimeout(function () { msg.textContent = ''; }, 3000);
+  }).catch(function (err) {
+    msg.textContent = '❌ सेव नहीं हुआ: ' + err.message;
   });
 }
 
